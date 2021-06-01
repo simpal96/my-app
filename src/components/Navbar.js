@@ -1,4 +1,8 @@
+import { useState } from 'react'
+
 let Navbar = (props)=> {
+
+  var [isloggedin , setUser] = useState(props.isloggedin)
 let searchString
   let search = (event)=>{
     event.preventDefault();
@@ -7,6 +11,12 @@ let searchString
   let searchStringText =function(event){
     searchString = event.target.value
   }	
+
+
+  let logout = ()=>{
+    setUser(false)
+
+  }
   return (
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
   <a className="navbar-brand" href="#">{props.details.projectname}</a>
@@ -26,6 +36,9 @@ let searchString
     <form className="form-inline my-2 my-lg-0">
       <input onChange ={searchStringText} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
       <button onClick={search} className="btn btn-outline-success my-2 my-sm-0">Search</button>
+
+       { !isloggedin && <button className="btn btn-success">Login</button>}
+       { isloggedin && <button onClick={logout} className="btn btn-danger">Logout</button>}
     </form>
   </div>
 </nav>

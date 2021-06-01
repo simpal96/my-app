@@ -2,6 +2,9 @@
   text-align: center;
 }
 
+.thumbs-wrapper.axis-vertical{
+  display: none;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

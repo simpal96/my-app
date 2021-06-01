@@ -16,12 +16,19 @@ class Signup extends Component{
 		})
 	}
 
+
+	login= (e)=>{
+		e.preventDefault();
+		this.props.callme()
+	}
+
 	render(){
 		return (
 		<div>
        
        {this.state.likes}
        <button onClick={this.like} className="btn btn-primary">Like</button>
+        <button onClick= {this.login} className="btn btn-primary">login</button>
      	</div>
      	)
 
