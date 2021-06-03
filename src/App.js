@@ -1,11 +1,12 @@
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import './App.css';
-import CarouselComponent from "./components/carousel.component";
 import Cakelist from "./components/Cakelist";
-import {useState} from "react"
-
-
+import {useState} from "react";
+import { BrowserRouter as Router , Route,Switch} from "react-router-dom"
+import Home from "./components/Home";
+import About from "./components/About";
+import Pagenotfound from "./components/Pagenotfound";
 
 
 
@@ -15,7 +16,7 @@ var [login , setLogin] = useState(false)
 
 var details =  {
 projectname : "My cake",
-username : "simpal"
+abouepage : "About"
 }
 
 
@@ -31,28 +32,32 @@ var myphone = () =>{
 }
 
 return (
-	<div>
-    <Navbar isloggedin = {login} details={details} project ="My cake shop" name ="hello">Simpal</Navbar>
-    <CarouselComponent />
-    <Signup callme={myphone}>simpal@gmail.com</Signup>
-    <Cakelist cake={product} />
-  
- 
 
-	</div>
+
+	<Router>
+  <Navbar isloggedin = {login} details={details} project ="Shop">Simpal</Navbar>
+   
+ <Switch>
+
+     <Route exact path ="/" component = {Home} />
+      <Route exact path="/about" component = {About} />
+      	
+     <Route exact path ="/signup" component = {Signup} />
+     <Route exact path ="/*" component = {Pagenotfound} />
+
+ </Switch>
+	</Router>	
 	)
 
 }
-
-
 
 export default App
 
 var obj = {
 	details:{
 		projectname : "My cake",
-		username : "simpal"
+		abouepage : "About"
 },
-project : "My cake shop",
+project : "Shop",
 name: "hello"
 }

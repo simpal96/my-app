@@ -7,35 +7,26 @@ export default function CarouselComponent() {
     <div className="carousel-wrapper">
     <Carousel infiniteLoop autoPlay>
 
-          <div>
-            <img
-            alt='' style = {{height : "30em"}} 
-            src='https://image.shutterstock.com/image-photo/calm-african-mother-her-funny-600w-1746359492.jpg'
-            />
-            </div>
 
-            <div>
-            <img
-            alt='' style = {{height : "30em"}} 
-            src='https://image.shutterstock.com/image-photo/woman-felt-depressed-upset-sad-600w-1506663215.jpg'
-            />
-            </div>
+    <div>
+    <img alt='' style = {{height : "30em"}}  src='img/img1.jpg' />
+    </div>
 
-            <div>
-            <img
-            alt='' style = {{height : "30em"}} 
-            src='https://image.shutterstock.com/image-photo/young-woman-taking-selfie-mobile-600w-1456170263.jpg'
-            />
-            </div>
+    <div>
+    <img alt='' style = {{height : "30em"}}  src='img/img2.png'/>
+  </div>
 
 
-            <div>
-            <img
-            alt='' style = {{height : "30em"}} 
-            src='https://image.shutterstock.com/image-photo/beautiful-girl-enjoying-fresh-air-600w-1033685779.jpg'
-            />
-            </div> 
+    <div>
+    <img alt='' style = {{height : "30em"}}  src='img/img3.png'  />
+    </div>
+
+    <div>
+    <img alt='' style = {{height : "30em"}}  src='img/img4.png' />
+    </div>
+
+
     </Carousel>
     </div>
     );
-  }
+}
