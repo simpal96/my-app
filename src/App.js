@@ -1,15 +1,14 @@
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
+import Login from "./components/Login";
 import './App.css';
 import Cakelist from "./components/Cakelist";
 import {useState} from "react";
 import { BrowserRouter as Router , Route,Switch} from "react-router-dom"
+import Search from './components/Search';
 import Home from "./components/Home";
 import About from "./components/About";
 import Pagenotfound from "./components/Pagenotfound";
-
-
-
 
 function App(){
 var [login , setLogin] = useState(false)
@@ -39,9 +38,11 @@ return (
    
  <Switch>
 
-     <Route exact path ="/" component = {Home} />
-      <Route exact path="/about" component = {About} />
-      	
+     <Route exact path="/" component = {Home} />
+     
+     <Route exact path="/about" component = {About} />
+     <Route exact path ="/search" component ={Search}></Route>
+     <Route exact path ="/login" component = {Login} />
      <Route exact path ="/signup" component = {Signup} />
      <Route exact path ="/*" component = {Pagenotfound} />
 

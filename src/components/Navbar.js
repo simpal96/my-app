@@ -1,19 +1,28 @@
 import { useState } from 'react'
 import react from 'react'
-import { Link } from 'react-router-dom';
+import {Link, Router, withRouter} from "react-router-dom";
 
 let Navbar = (props)=> {
 
   var [isloggedin , setUser] = useState(props.isloggedin)
-let searchString
-  let search = (event)=>{
-    event.preventDefault();
-    alert(searchString);
+let searchstring=""
+  let  search = (event)=>{
+    event.preventDefault()
+    
+    if(searchstring != null){
+      if(searchstring !==""){
+        var url = "/search?q="+searchstring
+        props.history.push(url)
+      }
+    }
+    else{
+      alert("please enter");
+    }
   }
-  let searchStringText =function(event){
-    searchString = event.target.value
-  }	
 
+  let getserchText = (event)=>{
+    searchstring = event.target.value;
+  }
 
   let logout = ()=>{
     setUser(false)
@@ -36,11 +45,14 @@ let searchString
         <a className="nav-link" href="#">Welcome {props.children}</a>
       </li>
      </ul>
-    <form className="form-inline my-2 my-lg-0">
-      <input onChange ={searchStringText} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button onClick={search} className="btn btn-outline-success my-2 my-sm-0">Search</button>
 
-       { !isloggedin && <button className="btn btn-success">Login</button>}
+    <form className="form-inline my-2 my-lg-0">
+<input className="form-control me-2" onChange = {getserchText} type="search"  placeholder="Search" aria-label="Search"/>
+              
+                <button className="search btn btn-outline-success" onClick={search} type="submit">Search</button>
+       { !isloggedin && <Link to="/signup"> <button className="btn btn-success">Signup</button></Link>}
+       { !isloggedin && <Link to="/login"> <button className="btn btn-primary">Login</button></Link>}
+
        { isloggedin && <button onClick={logout} className="btn btn-danger">Logout</button>}
     </form>
   </div>
@@ -48,4 +60,6 @@ let searchString
 	)
 }
 
-export default  Navbar
+Navbar = withRouter(Navbar)
+export default Navbar;
+

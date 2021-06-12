@@ -27,21 +27,20 @@ useEffect(() =>{
 
   
 	return(
-     
+    
+			<div className="row">
+			<CarouselComponent />
+			<div className="cake-list">
 
-		<div className="row">
-	<CarouselComponent />
-<div className="cake-list">
-
-		{ cakes.map((each,index)=>{
-			return( <Cake data={each} key={index} />)
-			
-		})}
-		{isLoading && <div>Loading...</div>}
-		</div>
-		</div>
+				{ cakes.map((each,index)=>{
+					return( <Cake data={each} key={index} />)
+					
+				})}
+			{isLoading && <div>Loading...</div>}
+			</div>
+			</div>
 
 		)
-	}
+}
 
-	export default Cakelist
+export default Cakelist
