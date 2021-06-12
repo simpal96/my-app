@@ -3,6 +3,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import './App.css';
 import Cakelist from "./components/Cakelist";
+import CakeDetails from "./components/CakeDetails"
 import {useState} from "react";
 import { BrowserRouter as Router , Route,Switch} from "react-router-dom"
 import Search from './components/Search';
@@ -38,13 +39,13 @@ return (
    
  <Switch>
 
-     <Route exact path="/" component = {Home} />
-     
-     <Route exact path="/about" component = {About} />
+     <Route exact path="/" component ={Home}></Route>
+     <Route exact path="/about" component = {About}></Route>
      <Route exact path ="/search" component ={Search}></Route>
-     <Route exact path ="/login" component = {Login} />
-     <Route exact path ="/signup" component = {Signup} />
-     <Route exact path ="/*" component = {Pagenotfound} />
+     <Route exact path ="/login" component = {Login}></Route>
+     <Route exact path ="/signup" component = {Signup}></Route>
+     <Route exact path="/cake/:cake" component={CakeDetails}></Route>
+     <Route exact path ="/*" component = {Pagenotfound}></Route>
 
  </Switch>
 	</Router>	
