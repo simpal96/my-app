@@ -7,11 +7,19 @@ import CakeDetails from "./components/CakeDetails"
 import {useState} from "react";
 import { BrowserRouter as Router , Route,Switch} from "react-router-dom"
 import Search from './components/Search';
+import axios from "axios";
 import Home from "./components/Home";
 import About from "./components/About";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 import Pagenotfound from "./components/Pagenotfound";
 
 function App(){
+
+axios.interceptors.request.use((request)=>{
+          request.headers['authtoken'] = localStorage.userAccessToken
+          return request
+     });
 var [login , setLogin] = useState(false)
 
 var details =  {
@@ -30,7 +38,7 @@ price:123
 var myphone = () =>{
 	setLogin(true)
 }
-
+//console.log(">>>>>>>>>>>>>>" , process.env)
 return (
 
 
@@ -45,6 +53,8 @@ return (
      <Route exact path ="/login" component = {Login}></Route>
      <Route exact path ="/signup" component = {Signup}></Route>
      <Route exact path="/cake/:cake" component={CakeDetails}></Route>
+     <Route path ="/checkout"> <Checkout /></Route>
+     <Route path ="/cart"> <Cart /></Route>
      <Route exact path ="/*" component = {Pagenotfound}></Route>
 
  </Switch>

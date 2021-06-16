@@ -1,84 +1,124 @@
-import React, { Children, useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import {Component} from "react";
+import {useState} from "react";
+import axios from 'axios';
+import { connect } from "react-redux"
+import {loginmiddleware} from "../reduxstore/middleware"
+import {withRouter , Link} from "react-router-dom"
+class Login extends Component {
 
-const apiurl="https://apibyashu.herokuapp.com/api/login"
-let  Login = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [messagedisplay, setMessageDisplay] = useState();
-  const [fetchData, setFetch] = useState(false);
+	constructor (props) {
+		// console.log(props);
+		super(props);
+		this.state = {
+			email: '',
+			password: '',
+			error_msg: '',
+			error_password_msg : ''
+		}
+		console.log();
+	}
+	
+	validation = () => {
+		//console.log(this.state.email);
+		var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var checkEmail =  this.state.email;
+		var password = this.state.password;
+		if(password === '' || password === 'undefined') {
+			this.setState({
+		  		error_password_msg : "Please Enter the Password"
+		  	});
+		} else {
+			this.setState({
+		  		error_name_msg : ""
+		  	});
+		}
+		//validation for email
+		if(checkEmail === '' || checkEmail === 'undefined')
+		{
+			this.setState({
+		  		error_msg : "Please Enter the email Id"
+		  	});
+		} else {
+			if(!regex.test(checkEmail)) {
+			  	this.setState({
+			  		error_msg : "Invalid Email Id"
+			  	});
+			} else{
+			  
+				this.setState({
+					error_msg : ""
+				});
+			}
+		}	
+		
+		//return false;
+		if(password !== '' && checkEmail !== '') {
+			this.props.dispatch(loginmiddleware(this.state));	
+		} 
+	}
+	verifyEmail = (event) => {
+		event.preventDefault();
+		this.setState({
+			email : event.target.value
+		});
+	}
+	verifyPassword = (event) => {
+		event.preventDefault();
+		this.setState({
+			password : event.target.value
+		});
+	}
 
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
-  }
+	render () {
 
-
- var onSubmithandler = (e) =>{ 
-      e.preventDefault();
-      axios({method:"POST",url:apiurl,data:{email:email,password:password}}).then((response)=>{
-        console.log("loginnnnnprops",props)
-        if(response.data.message === "Invalid Credentials"){
-        console.log("loginnnnnprops",props)
-          setMessageDisplay(response.data.message)
-        }else{
-          setMessageDisplay("login successfully")
-          // props.callme();
-          props.history.push({
-            pathname: '/',
-            // search: '?query=abc',
-            state: { details : "r"
-              
-            }
-          })
-         
-        }
-    console.log("response login ..",response.data);
-  
-     },(error)=>{
-      
-       setMessageDisplay(error.data)
-      
-      console.log("error login ...",error.data);
-     });
-   
-  }
-
-  return (
-    <div className="container  ">
+return(
+ <div className="container  ">
       <div className="row justify-content-center ">
       <div className="card login mt-5">
         <h2 className="card-title text-center">Login</h2>
           <div className="card-body  ">
    
-          <form className=" login" onSubmit ={onSubmithandler} >
-          <p style = {{"color":"red"}}>{messagedisplay}</p>
-            <div className="login form-group" size="lg" controlId="email">
+              <div className="login form-group" size="lg" controlId="email">
               <label>Email</label>
-              <input className="login form-control" autoFocus type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your Email address"/>
+              <input className="form-control mr-sm-2" type="text" placeholder="Email" onChange ={this.verifyEmail}/>
+			 <label>{this.state.error_msg}</label>
             </div>
             <div className="login form-group" size="lg" controlId="password" >
               <label>Password</label>
-              <input className="login form-control"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}  placeholder="Enter your password"
-              />
-              {/* {props.detail} */}
+              <input className="form-control mr-sm-2" type="password" placeholder="Password" onChange ={this.verifyPassword}/>
+			  <label>{this.state.error_password_msg}</label>
             </div>
-            <button className=" signup btn btn-primary" size="lg" type="submit"     disabled={!validateForm()}>
-              Login
-            </button>
             <div>
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.validation}>Submit</button>
+            <hr></hr>
             <label> new user  ?  <Link to="/signup">
              <a >create account</a></Link></label>
              </div>
-          </form>
+          
   
     </div>
         </div>
       </div>
     </div>
-  );
+
+)
+	}
 }
+
+Login = connect(function (state, props) {
+	//alert("props" + JSON.stringify(props))
+	if(state.AuthReducer?.isloggedin) {
+		
+		props.history.push('/')
+	} else {
+		return {
+			isloading: state.AuthReducer?.isloading
+		}
+	}
+})(Login)
+
+
+Login = withRouter(Login)
+
+
 export default Login

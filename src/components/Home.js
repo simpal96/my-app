@@ -6,7 +6,7 @@ import {useEffect , useState} from "react"
 import CarouselComponent from "./carousel.component";
 
 function Cakelist(){
-	var apiurl  = "https://apibyashu.herokuapp.com/api/allcakes"
+	var apiurl  = process.env.REACT_APP_BASE_URL+"/allcakes"
 	var [cakes,setCakes] = useState([])
 	var [isLoading,setloading] = useState(true)
 
@@ -24,8 +24,6 @@ useEffect(() =>{
 	setloading(false)
 })
 },[])
-
-  
 	return(
     
 			<div className="row">

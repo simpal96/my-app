@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 function Search(props){
 
     var query = querystring.parse(props.location.search)
-var apiurl = `https://apibyashu.herokuapp.com/api/searchcakes?q=${query.q}`
+var apiurl = `https://apifromashu.herokuapp.com/api/searchcakes?q=${query.q}`
     
     var [Cakes,setData]=useState([]);
     useEffect(()=>{

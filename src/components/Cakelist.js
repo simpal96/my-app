@@ -5,7 +5,7 @@ import axios from 'axios';
 import {useEffect , useState} from "react"
 
 function Cakelist(){
-	var apiurl  = "https://apibyashu.herokuapp.com/api/allcakes"
+	var apiurl  = process.env.REACT_APP_BASE_URL+"/allcakes"
 	var [cakes,setCakes] = useState([])
 
 useEffect(() =>{

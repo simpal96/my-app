@@ -2,12 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
+import {addcartMiddleware} from  "../reduxstore/addcartMiddleware"
+import {useDispatch} from "react-redux"
 
 function CakeDetails(props){
 
  var param=useParams();
- var apiurl="https://apibyashu.herokuapp.com/api/cake/"+param.cake
+ var dispatch = useDispatch()
+
+var apiurl=  process.env.REACT_APP_BASE_URL+'/cake/'+param.cake
  var [cakedetails, setCakesdetail] = useState([])
  useEffect(()=>{
   axios({
@@ -21,6 +24,12 @@ function CakeDetails(props){
 
   )
 },[])
+
+ let addtocart = function(){
+    dispatch(addcartMiddleware(cakedetails))
+    
+ }
+ 
  return  (
   
 <div class="container">
@@ -28,11 +37,11 @@ function CakeDetails(props){
   <h2>Details of cake Id {param.cake}</h2>
     <hr></hr>
     <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-6">
      <img src={cakedetails.image}></img>
       <br></br>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-6">
        <h3>{cakedetails.name}</h3>
         <p>Price: {cakedetails.price}</p>
         <h5>Des:</h5><p>{cakedetails.description}</p>
@@ -40,13 +49,11 @@ function CakeDetails(props){
         <p>Weight :{cakedetails.weight}</p>
         <p>Flavour : {cakedetails.flavour}</p>
     </div>
-    <button className="btn btn-primary">Add to Cart</button>
+    
+     <button onClick={addtocart} className="btn btn-primary">Add To Cart</button>
   </div>
 </div>
-
-
-
-  )
+ )
 }
 export default CakeDetails
 

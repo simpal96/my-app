@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import react from 'react'
 import {Link, Router, withRouter} from "react-router-dom";
+import {connect} from "react-redux"
 
 let Navbar = (props)=> {
 
@@ -24,10 +25,13 @@ let searchstring=""
     searchstring = event.target.value;
   }
 
-  let logout = ()=>{
-    setUser(false)
+let logout = () => {
+   props.dispatch({
+        type: "LOGOUT",
+      })
 
-  }
+
+}
   return (
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
   <a className="navbar-brand" href="/">{props.details.projectname}</a>
@@ -49,11 +53,11 @@ let searchstring=""
     <form className="form-inline my-2 my-lg-0">
 <input className="form-control me-2" onChange = {getserchText} type="search"  placeholder="Search" aria-label="Search"/>
               
-                <button className="search btn btn-outline-success" onClick={search} type="submit">Search</button>
+      <button className="search btn btn-outline-success" onClick={search} type="submit">Search</button>
        { !isloggedin && <Link to="/signup"> <button className="btn btn-success">Signup</button></Link>}
-       { !isloggedin && <Link to="/login"> <button className="btn btn-primary">Login</button></Link>}
+       { !props.isloggedin && <Link to="/login"> <button className="btn btn-primary">Login</button></Link>}
 
-       { isloggedin && <button onClick={logout} className="btn btn-danger">Logout</button>}
+       { props.isloggedin && <button onClick={logout} className="btn btn-danger">Logout</button>}
     </form>
   </div>
 </nav>
@@ -61,5 +65,15 @@ let searchstring=""
 }
 
 Navbar = withRouter(Navbar)
-export default Navbar;
+
+function mapStateToProps(state, props){
+ // alert("Nav"+JSON.stringify(state)) 
+return {
+
+         ...props ,
+         username : state.AuthReducer.username,
+         isloggedin: state.AuthReducer.isloggedin
+      }
+}
+export default connect(mapStateToProps)(Navbar);
 
